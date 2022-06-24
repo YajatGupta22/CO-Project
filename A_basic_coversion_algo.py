@@ -61,9 +61,13 @@ def convert(sen):
         sen_list_assem.append(sen_list[2])
 
     print(*sen_list_assem, sep="")
-for i in range(5):
+
+m=int(input("Enter the number of lines :"))
+
+for i in range(m):
     sen = input()
     convert(sen)
+
 # print(len(dict0) - len(op1 + op2 + op3 + op4+op5) - 3)
 # print(1001001001100100 == 1001001001100100)
 # print([x for x in dict0 if x not in op1 + op2 + op3 + op4+op5])
