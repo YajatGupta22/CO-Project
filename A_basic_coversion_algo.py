@@ -77,7 +77,7 @@ m = int(input("Enter the number of lines :"))
 for i in range(m):
     mem1 = 1
     sen = input()
-    if sen.split()[0] != "Var":
+    if sen.split()[0] != "var":
         convert(sen)
     else:
         sen_list = sen.split()
