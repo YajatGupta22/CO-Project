@@ -1,3 +1,6 @@
+from asyncio.windows_events import NULL
+
+
 def decimalToBinary(n):
     n = int(str(n)[1::])
     bnr = bin(int(n)).replace('0b', '')
@@ -88,7 +91,8 @@ sen="hehehe"
 while("hlt" not in sen):
     mem1 = 1
     sen = input()
-    list_inputs.append(sen)
+    if sen!="":
+        list_inputs.append(sen)
 for sen in list_inputs:
     if sen.split()[0] != "var":
         convert(sen)
