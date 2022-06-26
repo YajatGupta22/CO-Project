@@ -67,8 +67,8 @@ def convert(sen):
             assert sen_list[i+1] in reg, "Syntax Error! register not present in ISO"
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op3:
-        assert sen_list[1] in variables,"Error!,Variable not declared"
-        sen_list_assem.append(variables[sen_list[1]])
+        assert sen_list[1] in mem_adrr,"Error!,wrong value for  not label"
+        sen_list_assem.append(str(sen_list[1]))
     elif sen_list[0] in op4:
         assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
         sen_list_assem.append(reg[sen_list[1]])
@@ -110,7 +110,7 @@ num_inputs=len(list_inputs)
 # Converting the inputs and printting them
 for sen in list_inputs:
     if sen.split()[0] != "var":
-        mem_adrr[sen]=decimalToBinary2(mem1)
+        mem_adrr[decimalToBinary2(mem1)]=sen
         mem1+=1
 for sen in list_inputs:
     if sen.split()[0] == "var":
