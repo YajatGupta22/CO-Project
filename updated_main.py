@@ -1,6 +1,3 @@
-from asyncio.windows_events import NULL
-
-
 def decimalToBinary(n):
     n = int(str(n)[1::])
     bnr = bin(int(n)).replace('0b', '')
