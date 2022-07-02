@@ -5,7 +5,7 @@ def decimalToBinary(n):
     assert n[0]=="$"," Error! ,integer not declared with a '$' sign" 
     n = int(str(n)[1::])
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1]  # this reverses the  array
+    x = bnr[::-1]
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
@@ -13,7 +13,7 @@ def decimalToBinary(n):
 
 def decimalToBinary2(n):
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1]  # this reverses an array
+    x = bnr[::-1]
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
@@ -69,10 +69,8 @@ def convert(sen):
             assert sen_list[i+1] in reg, "Syntax Error! register not present in ISO"
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op3:
-        # assert sen_list[1] in mem_adrr,"Error!,wrong value for  not label"
         assert sen_list[0] not in labels,"Error!,wrong name for  not label"
         sen_list_assem.append("000")
-        # sen_list_assem.append(str(sen_list[1]))
         sen_list_assem.append(labels[sen_list[1]])
     elif sen_list[0] in op4:
         assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
@@ -131,6 +129,6 @@ for sen in list_inputs:
         r=" ".join(label_inp)
         convert(r)
 
-# # Printing the output
+ # Printing the output
 for x in outputs:
     print(x)
