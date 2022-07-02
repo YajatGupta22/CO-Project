@@ -103,13 +103,10 @@ def convert(sen):
 mem1 = 0
 
 # Taking inputs in loops and saving them in list_inputs
-# for line in stdin:
-#     if line!="":
-#         list_inputs.append(line)
-while ("hlt" != sen):
-    sen=input()
-    if sen!="":
-        list_inputs.append(sen)
+for line in stdin:
+    if line!="":
+        list_inputs.append(line)
+
 
 
 # Converting the inputs and printting them
@@ -131,15 +128,9 @@ for sen in list_inputs:
     elif sen.split()[0][::-1][0]==":":
         label_inp=sen.split()
         label_inp.pop(0)
-        # convert(" ".join(label_inp))
         r=" ".join(label_inp)
-        # print(r)
-        # print(r.split())
         convert(r)
-    # else:
-    #     print(sen.split()[0][::-1][0])
 
 # # Printing the output
 for x in outputs:
     print(x)
-# print(labels)
