@@ -102,11 +102,14 @@ def convert(sen):
 
 mem1 = 0
 
-# Taking inputs in loops and saving them in list_inputs
-for line in stdin:
-    if line!="":
-        list_inputs.append(line)
-
+# # Taking inputs in loops and saving them in list_inputs
+# for line in stdin:
+#     if line!="":
+#         list_inputs.append(line)
+while(sen!="hlt"):
+    sen=input()
+    if sen!="":
+        list_inputs.append(sen)
 
 
 # Converting the inputs and printting them
@@ -122,6 +125,7 @@ for sen in list_inputs:
     if sen.split()[0] == "var":
         variables[sen.split()[1]]=decimalToBinary2(mem1)
         mem1+=1
+assert mem1<257,"Memory overflow Error! , too many instructions for the ISO to handle"
 for sen in list_inputs:
     if sen.split()[0] != "var" and sen.split()[0][0:-1] not in labels:
         convert(sen)
