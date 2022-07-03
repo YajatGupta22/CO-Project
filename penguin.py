@@ -5,14 +5,14 @@ def decimalToBinary(n):
     assert n[0]=="$"," Error! ,integer not declared with a '$' sign" 
     n = int(str(n)[1::])
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1]  
+    x = bnr[::-1]  # this reverses the  array
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
     return bnr
 def decimalToBinary2(n):
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1] 
+    x = bnr[::-1]  # this reverses an array
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
@@ -30,12 +30,16 @@ def check_var(inp_lists):
     for i in inp_lists:
         if((i[0]=="st" or i[0]=="ld") and i[-1].isalpha() and i[-1] not in var_list):
             assert False,"variable used before reference"
-    if len(var_index):
-        if sorted(var_index) != list(range(0, max(var_index)+1)):
-            assert False,"Variables not declared at beginning"
+    if sorted(var_index) != list(range(0, max(var_index)+1)):
+        assert False,"Variables not declared at beginning"
     else:
         return True
-
+def check_hlt(inp_lists):
+    assert (inp_lists[-1]!="hlt"),"hlt not in the last line"
+    for i in  range(len(inp_lists)):
+        if inp_lists[i]=="hlt" and i!=len(inp_lists):
+            assert False,"hlt declared before the last line"
+            
 # Dictionary of operands , registers, and variables
 dict0 = {"add": "10000", "sub": "10001", "ld": "10100", "st": "10101", "mul": "10110",
          "div": "10111", "rs": "11000", "ls": "11001", "xor": "11010", "or": "11011", "and": "11100", "not": "11101",
@@ -116,16 +120,18 @@ def convert(sen):
     outputs.append("".join(sen_list_assem))
 
 # Taking inputs in loops and saving them in list_inputs
-for line in stdin:
-    if line!="":
-        list_inputs.append(line)
-#while(sen!="hlt"):
-#    sen=input()
-#    if sen!="":
-#        list_inputs.append(sen)
+# for line in stdin:
+#     if line!="":
+#         list_inputs.append(line)
+while(sen!="hlt"):
+    sen=input()
+    if sen!="":
+        list_inputs.append(sen)
 
 list_inputs_check=list_inputs.copy()
+list_inputs_check_2=list_inputs.copy()
 check_var(list_inputs_check)
+check_hlt(list_inputs_check_2)
 
 # Converting the inputs and printting them
 for sen in list_inputs:
@@ -138,7 +144,7 @@ for sen in list_inputs:
             mem1+=1
 for sen in list_inputs:
     if sen.split()[0] == "var":
-        assert sen.split()[1] not in variables,"variable redeclaration error"
+        assert sen.split()[1] not in variables,"Variable redeclaration error"
         variables[sen.split()[1]]=decimalToBinary2(mem1)
         mem1+=1
 assert mem1<257,"Memory overflow Error! , too many instructions for the ISO to handle"
