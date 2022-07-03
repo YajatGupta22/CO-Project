@@ -58,6 +58,7 @@ variables = {}
 mem_adrr={}
 outputs=[]
 mem1=0
+line_counter=0
 
 
 # Dividing the operations into 5 basic categeries on basis of different things
@@ -69,9 +70,9 @@ op5 = ["ld", "st"]
 
 
 # This function  converts a proper instruction into 16-bit binary assembly code
-def convert(sen):
+def convert(sen,line_counter):
     sen_list = [x for x in sen.split()]
-    assert sen_list[0] in dict0 , "Syntax Error! Operator not present in ISO"
+    assert sen_list[0] in dict0 , f"Syntax Error! in line {line_counter} Operator not present in ISO"
     if sen_list[0] != "mov":
         sen_list_assem = [dict0[sen_list[0]]]
     else:
@@ -124,12 +125,8 @@ for line in stdin:
     if line!="":
         list_inputs.append(line)
 
-list_inputs_check=list_inputs.copy()
-list_inputs_check_2=list_inputs.copy()
-check_var(list_inputs_check)
-check_hlt(list_inputs_check_2)
 
-# Converting the inputs and printting them
+# Assigning memory adresses to variables and labels and addiding them to dicts
 for sen in list_inputs:
     if sen.split()[0] != "var":
         if sen.split()[0][-1]==':':
@@ -143,15 +140,28 @@ for sen in list_inputs:
         assert sen.split()[1] not in variables,"Variable redeclaration error"
         variables[sen.split()[1]]=decimalToBinary2(mem1)
         mem1+=1
+line_counter+=len(variables)
+
+
+
+list_inputs_check=list_inputs.copy()
+list_inputs_check_2=list_inputs.copy()
+check_var(list_inputs_check)
+check_hlt(list_inputs_check_2)
+
 assert mem1<257,"Memory overflow Error! , too many instructions for the ISO to handle"
+
+#   Converting to bin-codes
 for sen in list_inputs:
     if sen.split()[0] != "var" and sen.split()[0][0:-1] not in labels:
-        convert(sen)
+        convert(sen,line_counter)
+        line_counter+=1
     elif sen.split()[0][::-1][0]==":":
         label_inp=sen.split()
         label_inp.pop(0)
         r=" ".join(label_inp)
-        convert(r)
+        convert(r,line_counter)
+        line_counter+=1
 
 # # Printing the output
 for x in outputs:
