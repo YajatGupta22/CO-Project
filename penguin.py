@@ -119,14 +119,14 @@ def convert(sen):
             sen_list_assem.append(reg[sen_list[2]])
     outputs.append("".join(sen_list_assem))
 
-# Taking inputs in loops and saving them in list_inputs
-# for line in stdin:
-#     if line!="":
+Taking inputs in loops and saving them in list_inputs
+for line in stdin:
+    if line!="":
 #         list_inputs.append(line)
-while(sen!="hlt"):
-    sen=input()
-    if sen!="":
-        list_inputs.append(sen)
+# while(sen!="hlt"):
+#     sen=input()
+#     if sen!="":
+#         list_inputs.append(sen)
 
 list_inputs_check=list_inputs.copy()
 list_inputs_check_2=list_inputs.copy()
