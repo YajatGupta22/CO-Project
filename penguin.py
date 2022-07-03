@@ -1,9 +1,10 @@
+from re import L
 from sys import stdin
 import sys
 
 # Changes an integer into 8 bit binary and returns the value as a string
-def decimalToBinary(n):
-    assert n[0]=="$"," Error! ,integer not declared with a '$' sign" 
+def decimalToBinary(n,line_counter):
+    assert n[0]=="$",f" Error! in line {line_counter} ,integer not declared with a '$' sign." 
     n = int(str(n)[1::])
     bnr = bin(int(n)).replace('0b', '')
     x = bnr[::-1]  # this reverses the  array
@@ -21,6 +22,7 @@ def decimalToBinary2(n):
 
 #   Checks if all the variables are declared at the begining and if they are not being used before declaration
 def check_var(inp_lists):
+    line_count=0
     var_list=[]
     var_index=[]
     for i in range(0,len(inp_lists)):
@@ -29,11 +31,12 @@ def check_var(inp_lists):
             var_list.append(inp_lists[i][-1])
             var_index.append(i)
     for i in inp_lists:
+        line_count+=1
         if((i[0]=="st" or i[0]=="ld") and i[-1].isalpha() and i[-1] not in var_list):
-            assert False,"variable used before reference"
+            assert False,f"variable used before reference in line {line_count}"
     if len(var_list)!=0:
         if sorted(var_index) != list(range(0, max(var_index)+1)):
-            assert False,"Variables not declared at beginning"
+            assert False,"Error! Variables not declared at beginning in"
         else:
             return True
 def check_hlt(inp_lists):
@@ -58,7 +61,7 @@ variables = {}
 mem_adrr={}
 outputs=[]
 mem1=0
-line_counter=0
+line_counter=1
 
 
 # Dividing the operations into 5 basic categeries on basis of different things
@@ -83,40 +86,40 @@ def convert(sen,line_counter):
     if sen_list[0] in op1:
         sen_list_assem.append("00")
         for i in range(3):
-            assert sen_list[i+1] in reg, "Syntax Error! register not present in ISO"
+            assert sen_list[i+1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op2:
         sen_list_assem.append("00000")
         for i in range(2):
-            assert sen_list[i+1] in reg, "Syntax Error! register not present in ISO"
+            assert sen_list[i+1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op3:
-        assert sen_list[0]  in labels,"Error!,wrong name for  not label"
+        assert sen_list[0]  in labels,f"Error!, at line {line_counter} wrong name for  not label"
         sen_list_assem.append("000")
         sen_list_assem.append(labels[sen_list[1]])
     elif sen_list[0] in op4:
-        assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
+        assert sen_list[1] in reg, f"Syntax Error! at at line {line_counter} register not present in ISO"
         sen_list_assem.append(reg[sen_list[1]])
-        assert  0<int(sen_list[2][1::])<256,"Error! , the illiegal immideate value"
-        sen_list_assem.append(decimalToBinary(sen_list[2]))
+        assert  0<=int(sen_list[2][1::])<256,f"Error! , the illiegal immideate value at line {line_counter}"
+        sen_list_assem.append(decimalToBinary(sen_list[2]),line_counter)
     elif sen_list[0] in op5:
-        assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
+        assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
         sen_list_assem.append(reg[sen_list[1]])
-        assert sen_list[2] in variables,"Error!, Variable not declared"
+        assert sen_list[2] in variables,f"Error!, at line {line_counter} Variable not declared"
         sen_list_assem.append(variables[sen_list[2]])
     elif sen_list[0] == "hlt":
         sen_list_assem.append("00000000000")
     elif sen_list[0] == "mov":
         if sen_list[2] not in reg:
-            assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
+            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
-            assert  0<int(sen_list[2][1::])<256,"Error! , the illiegal immideate value"
-            sen_list_assem.append(decimalToBinary(sen_list[2]))
+            assert  0<=int(sen_list[2][1::])<256,f"Error! ,at line {line_counter} the illiegal immideate value"
+            sen_list_assem.append(decimalToBinary(sen_list[2],line_counter))
         else:
             sen_list_assem.append("00000")
-            assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
+            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
-            assert sen_list[2] in reg, "Syntax Error! register not present in ISO"
+            assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[2]])
     outputs.append("".join(sen_list_assem))
 
@@ -137,7 +140,7 @@ for sen in list_inputs:
             mem1+=1
 for sen in list_inputs:
     if sen.split()[0] == "var":
-        assert sen.split()[1] not in variables,"Variable redeclaration error"
+        assert sen.split()[1] not in variables,f"Variable redeclaration error at line {len(variables)+1}"
         variables[sen.split()[1]]=decimalToBinary2(mem1)
         mem1+=1
 line_counter+=len(variables)
