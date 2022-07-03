@@ -36,7 +36,7 @@ def check_var(inp_lists):
             assert False,f"variable used before reference in line {line_count}"
     if len(var_list)!=0:
         if sorted(var_index) != list(range(0, max(var_index)+1)):
-            assert False,"Error! Variables not declared at beginning in"
+            assert False,"Error! Variables not declared at beginning ."
         else:
             return True
 def check_hlt(inp_lists):
