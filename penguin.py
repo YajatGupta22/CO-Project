@@ -1,4 +1,5 @@
 from sys import stdin
+import sys
 
 # Changes an integer into 8 bit binary and returns the value as a string
 def decimalToBinary(n):
@@ -30,10 +31,11 @@ def check_var(inp_lists):
     for i in inp_lists:
         if((i[0]=="st" or i[0]=="ld") and i[-1].isalpha() and i[-1] not in var_list):
             assert False,"variable used before reference"
-    if sorted(var_index) != list(range(0, max(var_index)+1)):
-        assert False,"Variables not declared at beginning"
-    else:
-        return True
+    if len(var_list)!=0:
+        if sorted(var_index) != list(range(0, max(var_index)+1)):
+            assert False,"Variables not declared at beginning"
+        else:
+            return True
 def check_hlt(inp_lists):
     assert (inp_lists[-1]!="hlt"),"hlt not in the last line"
     for i in  range(len(inp_lists)):
@@ -88,10 +90,8 @@ def convert(sen):
             assert sen_list[i+1] in reg, "Syntax Error! register not present in ISO"
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op3:
-        # assert sen_list[1] in mem_adrr,"Error!,wrong value for  not label"
-        assert sen_list[0] not in labels,"Error!,wrong name for  not label"
+        assert sen_list[0]  in labels,"Error!,wrong name for  not label"
         sen_list_assem.append("000")
-        # sen_list_assem.append(str(sen_list[1]))
         sen_list_assem.append(labels[sen_list[1]])
     elif sen_list[0] in op4:
         assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
@@ -123,10 +123,6 @@ def convert(sen):
 for line in stdin:
     if line!="":
         list_inputs.append(line)
-# while(sen!="hlt"):
-#     sen=input()
-#     if sen!="":
-#         list_inputs.append(sen)
 
 list_inputs_check=list_inputs.copy()
 list_inputs_check_2=list_inputs.copy()
@@ -159,4 +155,5 @@ for sen in list_inputs:
 
 # # Printing the output
 for x in outputs:
-    print(x)
+    sys.stdout.write(x)
+    sys.stdout.write("\n")
