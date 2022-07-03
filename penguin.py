@@ -122,7 +122,7 @@ def convert(sen):
 Taking inputs in loops and saving them in list_inputs
 for line in stdin:
     if line!="":
-#         list_inputs.append(line)
+        list_inputs.append(line)
 # while(sen!="hlt"):
 #     sen=input()
 #     if sen!="":
