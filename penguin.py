@@ -1,25 +1,39 @@
 from sys import stdin
 
-
+# Changes an integer into 8 bit binary and returns the value as a string
 def decimalToBinary(n):
     assert n[0]=="$"," Error! ,integer not declared with a '$' sign" 
     n = int(str(n)[1::])
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1]
+    x = bnr[::-1]  # this reverses the  array
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
     return bnr
-
 def decimalToBinary2(n):
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1]
+    x = bnr[::-1]  # this reverses an array
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
     return bnr
 
-
+#   Checks if all the variables are declared at the begining and if they are not being used before declaration
+def check_var(inp_lists):
+    var_list=[]
+    var_index=[]
+    for i in range(0,len(inp_lists)):
+        inp_lists[i]=inp_lists[i].split()
+        if(inp_lists[i][0]=="var"):
+            var_list.append(inp_lists[i][-1])
+            var_index.append(i)
+    for i in inp_lists:
+        if((i[0]=="st" or i[0]=="ld") and i[-1].isalpha() and i[-1] not in var_list):
+            assert False,"variable used before reference"
+    if sorted(var_index) != list(range(0, max(var_index)+1)):
+        assert False,"Variables not declared at beginning"
+    else:
+        return True
 
 # Dictionary of operands , registers, and variables
 dict0 = {"add": "10000", "sub": "10001", "ld": "10100", "st": "10101", "mul": "10110",
@@ -69,8 +83,10 @@ def convert(sen):
             assert sen_list[i+1] in reg, "Syntax Error! register not present in ISO"
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op3:
+        # assert sen_list[1] in mem_adrr,"Error!,wrong value for  not label"
         assert sen_list[0] not in labels,"Error!,wrong name for  not label"
         sen_list_assem.append("000")
+        # sen_list_assem.append(str(sen_list[1]))
         sen_list_assem.append(labels[sen_list[1]])
     elif sen_list[0] in op4:
         assert sen_list[1] in reg, "Syntax Error! register not present in ISO"
@@ -98,13 +114,17 @@ def convert(sen):
             sen_list_assem.append(reg[sen_list[2]])
     outputs.append("".join(sen_list_assem))
 
-mem1 = 0
+# # Taking inputs in loops and saving them in list_inputs
+# for line in stdin:
+#     if line!="":
+#         list_inputs.append(line)
+while(sen!="hlt"):
+    sen=input()
+    if sen!="":
+        list_inputs.append(sen)
 
-# Taking inputs in loops and saving them in list_inputs
-for line in stdin:
-    if line!="":
-        list_inputs.append(line)
-
+list_inputs_check=list_inputs.copy()
+check_var(list_inputs_check)
 
 # Converting the inputs and printting them
 for sen in list_inputs:
@@ -129,6 +149,6 @@ for sen in list_inputs:
         r=" ".join(label_inp)
         convert(r)
 
- # Printing the output
+# # Printing the output
 for x in outputs:
     print(x)
