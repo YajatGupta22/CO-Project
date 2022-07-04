@@ -146,12 +146,11 @@ for sen in list_inputs:
 line_counter+=len(variables)
 
 
-
+#   Checking for proper declaration of variables, presence of hlt and memory overflow errors.
 list_inputs_check=list_inputs.copy()
 list_inputs_check_2=list_inputs.copy()
 check_var(list_inputs_check)
 check_hlt(list_inputs_check_2)
-
 assert mem1<257,"Memory overflow Error! , too many instructions for the ISO to handle"
 
 #   Converting to bin-codes
@@ -166,7 +165,7 @@ for sen in list_inputs:
         convert(r,line_counter)
         line_counter+=1
 
-# # Printing the output
+#    Printing the output
 for x in outputs:
     sys.stdout.write(x)
     sys.stdout.write("\n")
