@@ -7,14 +7,14 @@ def decimalToBinary(n,line_counter):
     assert n[0]=="$",f" Error! in line {line_counter} ,integer not declared with a '$' sign." 
     n = int(str(n)[1::])
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1]  # this reverses the  array
+    x = bnr[::-1]
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
     return bnr
 def decimalToBinary2(n):
     bnr = bin(int(n)).replace('0b', '')
-    x = bnr[::-1]  # this reverses an array
+    x = bnr[::-1]
     while len(x) < 8:
         x += '0'
     bnr = x[::-1]
