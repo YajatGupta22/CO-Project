@@ -51,8 +51,7 @@ dict0 = {"add": "10000", "sub": "10001", "ld": "10100", "st": "10101", "mul": "1
          "cmp": "11110", "jmp": "11111", "jlt": "01110", "jgt": "01101", "je": "01111", "hlt": "01010",
          "mov":"erprev"
          }
-reg = {"R0": "000", "R1": "001", "R2": "010", "R3": "011", "R4": "100", "R5": "101", "R6": "110", "FLAGS": "111"
-       }
+reg = {"R0": "000", "R1": "001", "R2": "010", "R3": "011", "R4": "100", "R5": "101", "R6": "110"}
 labels={}
 # Initialising some objects
 list_inputs=[]
@@ -84,14 +83,14 @@ def convert(sen,line_counter):
         else:
             sen_list_assem = ["10011"]
     if sen_list[0] in op1:
-        assert len(sen_list) == 4, f"General syntax Error at line{line_counter}! Invalid number of operands."
+        assert len(sen_list) == 4, f"General syntax Error at line  {line_counter}! Invalid number of operands."
         
         sen_list_assem.append("00")
         for i in range(3):
             assert sen_list[i+1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op2:
-        assert len(sen_list) == 3, f"General syntax Error at line{line_counter}! Invalid number of operands."
+        assert len(sen_list) == 3, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
         sen_list_assem.append("00000")
         for i in range(2):
@@ -99,22 +98,22 @@ def convert(sen,line_counter):
             sen_list_assem.append(reg[sen_list[i + 1]])
     elif sen_list[0] in op3:
 
-        assert len(sen_list) == 2, f"General syntax Error at line{line_counter}! Invalid number of operands."
+        assert len(sen_list) == 2, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
         assert sen_list[1]  in labels,f"Error!, at line {line_counter} wrong name for  label"
         sen_list_assem.append("000")
         sen_list_assem.append(labels[sen_list[1]])
     elif sen_list[0] in op4:
 
-        assert len(sen_list) == 2, f"General syntax Error at line{line_counter}! Invalid number of operands."
+        assert len(sen_list) == 3, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
         assert sen_list[1] in reg, f"Syntax Error! at at line {line_counter} register not present in ISO"
         sen_list_assem.append(reg[sen_list[1]])
         assert  0<=int(sen_list[2][1::])<256,f"Error! , the illiegal immideate value at line {line_counter}"
-        sen_list_assem.append(decimalToBinary(sen_list[2]),line_counter)
+        sen_list_assem.append(decimalToBinary(sen_list[2],line_counter))
     elif sen_list[0] in op5:
 
-        assert len(sen_list) == 3, f"General syntax Error at line{line_counter}! Invalid number of operands."
+        assert len(sen_list) == 3, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
         assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
         sen_list_assem.append(reg[sen_list[1]])
@@ -122,29 +121,35 @@ def convert(sen,line_counter):
         sen_list_assem.append(variables[sen_list[2]])
     elif sen_list[0] == "hlt":
 
-        assert len(sen_list) == 1, f"General syntax Error at line{line_counter}! Invalid number of operands."
+        assert len(sen_list) == 1, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
         sen_list_assem.append("00000000000")
     elif sen_list[0] == "mov":
 
-        assert len(sen_list) == 3, f"General syntax Error at line{line_counter}! Invalid number of operands."
+        assert len(sen_list) == 3, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
-        if sen_list[2] not in reg:
+        if sen_list[2] not in reg and sen_list[2]!= "FLAGS":
             assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
             assert  0<=int(sen_list[2][1::])<256,f"Error! ,at line {line_counter} the illiegal immideate value"
             sen_list_assem.append(decimalToBinary(sen_list[2],line_counter))
-        else:
+        elif sen_list[2]!="FLAGS":
             sen_list_assem.append("00000")
             assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
             assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[2]])
+        else:
+            sen_list_assem.append("00000")
+            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
+            sen_list_assem.append(reg[sen_list[1]])
+            sen_list_assem.append("000")
+
     outputs.append("".join(sen_list_assem))
 
 # Taking inputs in loops and saving them in list_inputs
 for line in stdin:
-    if line!="":
+    if line!="" and line!="\n":
         list_inputs.append(line)
 
 
@@ -188,4 +193,3 @@ for sen in list_inputs:
 for x in outputs:
     sys.stdout.write(x)
     sys.stdout.write("\n")
-print(labels)
