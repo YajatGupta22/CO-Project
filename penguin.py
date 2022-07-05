@@ -143,7 +143,7 @@ def convert(sen,line_counter):
             sen_list_assem.append("00000")
             assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
-            sen_list_assem.append("000")
+            sen_list_assem.append("111")
 
     outputs.append("".join(sen_list_assem))
 
