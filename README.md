@@ -6,4 +6,4 @@ More details are in the guidelines attached with this project.
 
 
 This code is a result of hardwork. This is the earning of our blood and sweat.
-Fruit of our sleepless, you are requested to ignore any minor problems, we will be always grateful.
+Fruit of our sleepless nights, you are requested to ignore any minor problems, we will be always grateful.
