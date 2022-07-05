@@ -49,7 +49,7 @@ def check_hlt(inp_lists):
 # Dictionary of operands , registers, and variables
 dict0 = {"add": "10000", "sub": "10001", "ld": "10100", "st": "10101", "mul": "10110",
          "div": "10111", "rs": "11000", "ls": "11001", "xor": "11010", "or": "11011", "and": "11100", "not": "11101",
-         "cmp": "11110", "jmp": "11111", "jlt": "01110", "jgt": "01101", "je": "01111", "hlt": "01010",
+         "cmp": "11110", "jmp": "11111", "jlt": "01100", "jgt": "01101", "je": "01111", "hlt": "01010",
          "mov":"erprev"
          }
 reg = {"R0": "000", "R1": "001", "R2": "010", "R3": "011", "R4": "100", "R5": "101", "R6": "110"}
@@ -80,9 +80,9 @@ def convert(sen,line_counter):
         sen_list_assem = [dict0[sen_list[0]]]
     else:
         if sen_list[2] in reg:
-            sen_list_assem = ["10010"]
-        else:
             sen_list_assem = ["10011"]
+        else:
+            sen_list_assem = ["10010"]
     if sen_list[0] in op1:
         assert len(sen_list) == 4, f"General syntax Error at line  {line_counter}! Invalid number of operands."
         
@@ -129,22 +129,23 @@ def convert(sen,line_counter):
 
         assert len(sen_list) == 3, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
-        if sen_list[1] not in reg and sen_list[1]!= "FLAGS":
-            assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
+        if sen_list[2] not in reg:
+            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
             assert  0<=int(sen_list[2][1::])<256,f"Error! ,at line {line_counter} the illiegal immideate value"
             sen_list_assem.append(decimalToBinary(sen_list[2],line_counter))
         elif sen_list[1]!="FLAGS":
             sen_list_assem.append("00000")
-            assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
-            sen_list_assem.append(reg[sen_list[1]])
             assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
+            sen_list_assem.append(reg[sen_list[1]])
+            assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[2]])
         else:
             sen_list_assem.append("00000")
-            assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
-            sen_list_assem.append(reg[sen_list[1]])
+            assert ((sen_list[1] in reg) or (sen_list[1]=="FLAGS")), f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append("111")
+            sen_list_assem.append(reg[sen_list[2]])
+            
 
     outputs.append("".join(sen_list_assem))
 
