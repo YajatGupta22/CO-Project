@@ -40,7 +40,8 @@ def check_var(inp_lists):
         else:
             return True
 def check_hlt(inp_lists):
-    assert (inp_lists[-1]!="hlt"),"hlt not in the last line"
+    if len(inp_lists):
+        assert (inp_lists[-1]!="hlt"),"hlt not in the last line"
     for i in  range(len(inp_lists)):
         if inp_lists[i]=="hlt" and i!=len(inp_lists):
             assert False,"hlt declared before the last line"
@@ -174,7 +175,7 @@ line_counter+=len(variables)
 list_inputs_check=list_inputs.copy()
 list_inputs_check_2=list_inputs.copy()
 check_var(list_inputs_check)
-check_hlt(list_inputs_check_2)
+check_hlt(list_inputs_check)
 assert mem1<257,"Memory overflow Error! , too many instructions for the ISO to handle"
 
 #   Converting to bin-codes
