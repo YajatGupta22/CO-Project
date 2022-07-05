@@ -129,20 +129,20 @@ def convert(sen,line_counter):
 
         assert len(sen_list) == 3, f"General syntax Error at line {line_counter}! Invalid number of operands."
 
-        if sen_list[2] not in reg and sen_list[2]!= "FLAGS":
-            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
+        if sen_list[1] not in reg and sen_list[1]!= "FLAGS":
+            assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
             assert  0<=int(sen_list[2][1::])<256,f"Error! ,at line {line_counter} the illiegal immideate value"
             sen_list_assem.append(decimalToBinary(sen_list[2],line_counter))
-        elif sen_list[2]!="FLAGS":
+        elif sen_list[1]!="FLAGS":
             sen_list_assem.append("00000")
-            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
-            sen_list_assem.append(reg[sen_list[1]])
             assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
+            sen_list_assem.append(reg[sen_list[1]])
+            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[2]])
         else:
             sen_list_assem.append("00000")
-            assert sen_list[1] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
+            assert sen_list[2] in reg, f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append(reg[sen_list[1]])
             sen_list_assem.append("111")
 
