@@ -188,4 +188,4 @@ for sen in list_inputs:
 for x in outputs:
     sys.stdout.write(x)
     sys.stdout.write("\n")
-print(labels)
+
