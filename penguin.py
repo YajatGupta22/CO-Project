@@ -101,7 +101,7 @@ def convert(sen,line_counter):
 
         assert len(sen_list) == 2, "General syntax Error! Invalid number of operands."
 
-        assert sen_list[0]  in labels,f"Error!, at line {line_counter} wrong name for  not label"
+        assert sen_list[1]  in labels,f"Error!, at line {line_counter} wrong name for  label"
         sen_list_assem.append("000")
         sen_list_assem.append(labels[sen_list[1]])
     elif sen_list[0] in op4:
@@ -188,3 +188,4 @@ for sen in list_inputs:
 for x in outputs:
     sys.stdout.write(x)
     sys.stdout.write("\n")
+print(labels)
