@@ -176,6 +176,8 @@ list_inputs_check=list_inputs.copy()
 list_inputs_check_2=list_inputs.copy()
 check_var(list_inputs_check)
 check_hlt(list_inputs_check)
+# print(list_inputs)
+assert list_inputs[-1]=="hlt\n","last line is not halt"
 assert mem1<257,"Memory overflow Error! , too many instructions for the ISO to handle"
 
 #   Converting to bin-codes
