@@ -39,13 +39,12 @@ def check_var(inp_lists):
             assert False,"Error! Variables not declared at beginning ."
         else:
             return True
-def check_hlt(inp_lists):
-    if len(inp_lists):
-        assert (inp_lists[-1]!="hlt"),"hlt not in the last line"
-    for i in  range(len(inp_lists)):
-        if inp_lists[i]=="hlt" and i!=len(inp_lists):
-            assert False,"hlt declared before the last line"
-            
+def check_hlt(inp_lists1):
+    assert (inp_lists1[-1]!="hlt"),"hlt not in the last line"
+    for i in  range(len(inp_lists1)-1):
+        if inp_lists1[i]==inp_lists1[-1]:
+            assert False,f"hlt declared before the last line at line {i+1}"
+              
 # Dictionary of operands , registers, and variables
 dict0 = {"add": "10000", "sub": "10001", "ld": "10100", "st": "10101", "mul": "10110",
          "div": "10111", "rs": "11000", "ls": "11001", "xor": "11010", "or": "11011", "and": "11100", "not": "11101",
