@@ -1,7 +1,5 @@
 from sys import stdin
 
-
-
 def decimalToBinary(n):
     bnr = bin(int(n)).replace('0b', '')
     x = bnr[::-1]
@@ -128,5 +126,6 @@ while (pC!=len(inputs)):
     execute(mem_adds[pC],pC)
     pC+=1
     mem_dump()
-    # print(mem_adds)
-    print(reg_val)
+    print("AB REG VALUES")
+    for x in reg_val:
+        print(decimalToBinary2(str(reg_val[x])))
