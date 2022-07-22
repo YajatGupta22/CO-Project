@@ -1,4 +1,4 @@
-from sys import flags, stdin
+from sys import stdin
 
 
 
@@ -39,7 +39,7 @@ op5_rev=['10100', '10101']
 
 mem_adds=["00000000"]*256
 pC=0
-reg_val={'000':0, '001':0, '010':0, '011':0, '100':0, '101':0, '110':0, "111":0}
+reg_val={'000':0, '001':0, '010':0, '011':0, '100':0, '101':0, '110':0, "111":"0000000000000000"}
 inputs=[]
 
 
@@ -55,10 +55,22 @@ def execute(sen,pC):
     op=sen[0:4]
     if op=="10000":         #  Add
         reg_val[sen[7:9]]=reg_val[sen[10:12]]+reg_val[sen[13:15]]
+        if reg_val[sen[10:12]]+reg_val[sen[13:15]]>255:
+            s=list(reg_val["111"])
+            s[-4]=1
+            reg_val["111"]=s
     if op=="10001":         #   Sub
         reg_val[sen[7:9]]=reg_val[sen[10:12]]-reg_val[sen[13:15]]
+        if reg_val[sen[10:12]]-reg_val[sen[13:15]]<0:
+            s=list(reg_val["111"])
+            s[-4]=1
+            reg_val["111"]=s
     if op=="10110":         #   Multiply
         reg_val[sen[7:9]]=reg_val[sen[10:12]]*reg_val[sen[13:15]]
+        if reg_val[sen[10:12]]*reg_val[sen[13:15]]>255:
+            s=list(reg_val["111"])
+            s[-4]=1
+            reg_val["111"]=s
     if op=="10111":         #   Divide    
         reg_val[sen[7:9]]=int(reg_val[sen[10:12]]/reg_val[sen[13:15]])
     if op=="10011":         #   Mov reg
@@ -80,17 +92,28 @@ def execute(sen,pC):
     if op=="11100":         #   Bitwise And
         reg_val[sen[7:9]]=reg_val[sen[10:12]]&reg_val[sen[13:15]]
     if op=="11110":         #   Compare And Flag
-        pass
+        if reg_val["111"]==reg_val[sen[13:15]]:
+            s=list(reg_val["111"])
+            s[-1]=1
+            reg_val["111"]=s
+        elif reg_val["111"]>reg_val[sen[13:15]]:
+            s=list(reg_val["111"])
+            s[-2]=1
+            reg_val["111"]=s
+        elif reg_val["111"]<reg_val[sen[13:15]]:
+            s=list(reg_val["111"])
+            s[-3]=1
+            reg_val["111"]=s
     if op=="11111":         #   Unconditional Jump
         pC=int(binaryToDecimal(sen[8:15]))
     if op=="01100":         #   Jump If  less than
-        if decimalToBinary(str(reg_val(flags)))[-3]==1:
+        if reg_val("111")[-3]==1:
             pC=int(binaryToDecimal(sen[8:15]))
     if op=="01101":         #   Jump If greater than
-        if decimalToBinary(str(reg_val(flags)))[-2]==1:
+        if reg_val("111")[-2]==1:
             pC=int(binaryToDecimal(sen[8:15]))
     if op=="01111":         #   Jump If  equal to
-        if decimalToBinary(str(reg_val(flags)))[-1]==1:
+        if reg_val("111")[-1]==1:
             pC=int(binaryToDecimal(sen[8:15]))
     if op="01010":
         pass
