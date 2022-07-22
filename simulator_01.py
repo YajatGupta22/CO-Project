@@ -1,5 +1,7 @@
 from sys import flags, stdin
 
+
+
 def decimalToBinary(n):
     bnr = bin(int(n)).replace('0b', '')
     x = bnr[::-1]
@@ -19,6 +21,14 @@ def binaryToDecimal(binary):
         i += 1
     return decimal 
     
+def decimalToBinary2(n):
+    bnr = bin(int(n)).replace('0b', '')
+    x = bnr[::-1]
+    while len(x) < 16:
+        x += '0'
+    bnr = x[::-1]
+    return bnr
+
 
 
 op1_rev=['10000', '10001', '10110', '11010', '11011', '11100']
@@ -41,7 +51,7 @@ def mem_dump():
         print(i)
 
 
-def execute(sen):
+def execute(sen,pC):
     op=sen[0:4]
     if op=="10000":         #  Add
         reg_val[sen[7:9]]=reg_val[sen[10:12]]+reg_val[sen[13:15]]
@@ -54,10 +64,33 @@ def execute(sen):
     if op=="10011":         #   Mov reg
         reg_val[sen[10:12]]=reg_val[sen[13:15]]
     if op=="10010":         #   Mov imm
-        reg_val[sen[5:7]]=decimalToBinary(sen[8:15])
+        reg_val[sen[5:7]]=binaryToDecimal(sen[8:15])
     if op=="10100":         #   Load
-
-
-
-
-
+        reg_val[sen[5:7]]=mem_adds[binaryToDecimal(sen[8:15])]
+    if op=="10101":         #   Store
+        mem_adds[binaryToDecimal(sen[8:15])]=reg_val[sen[5:7]]
+    if op=="11000":         #   Right Shift
+        reg_val[sen[5:7]]>>binaryToDecimal(sen[8:15])
+    if op=="11001":         #   Left Shift
+        reg_val[sen[5:7]]<<binaryToDecimal(sen[8:15])
+    if op=="11010":         #   Exclusiive Or
+        reg_val[sen[7:9]]=reg_val[sen[10:12]]^reg_val[sen[13:15]]
+    if op=="11011":         #   Bitwise Or
+        reg_val[sen[7:9]]=reg_val[sen[10:12]]|reg_val[sen[13:15]]
+    if op=="11100":         #   Bitwise And
+        reg_val[sen[7:9]]=reg_val[sen[10:12]]&reg_val[sen[13:15]]
+    if op=="11110":         #   Compare And Flag
+        pass
+    if op=="11111":         #   Unconditional Jump
+        pC=int(binaryToDecimal(sen[8:15]))
+    if op=="01100":         #   Jump If  less than
+        if decimalToBinary(str(reg_val(flags)))[-3]==1:
+            pC=int(binaryToDecimal(sen[8:15]))
+    if op=="01101":         #   Jump If greater than
+        if decimalToBinary(str(reg_val(flags)))[-2]==1:
+            pC=int(binaryToDecimal(sen[8:15]))
+    if op=="01111":         #   Jump If  equal to
+        if decimalToBinary(str(reg_val(flags)))[-1]==1:
+            pC=int(binaryToDecimal(sen[8:15]))
+    if op="01010":
+        pass
