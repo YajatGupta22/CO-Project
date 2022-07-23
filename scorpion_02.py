@@ -82,7 +82,7 @@ def execute(sen,pC):
     if op=="10100":         #   Load
         reg_val[sen[5:8]]=mem_adds[binaryToDecimal(sen[8:16])]
     if op=="10101":         #   Store
-        mem_adds[binaryToDecimal(sen[8:16])]=reg_val[sen[5:8]]
+        mem_adds[binaryToDecimal(sen[8:16])-1]=decimalToBinary2(reg_val[sen[5:8]])
     if op=="11000":         #   Right Shift
         reg_val[sen[5:8]]>>binaryToDecimal(sen[8:16])
     if op=="11001":         #   Left Shift
@@ -122,10 +122,11 @@ def execute(sen,pC):
 
 # Executing
 
-while (pC!=len(inputs)):
+while (pC<len(inputs)):
     execute(mem_adds[pC],pC)
     pC+=1
-    mem_dump()
-    print("AB REG VALUES")
+    print(decimalToBinary(pC-1),end=" ")
     for x in reg_val:
-        print(decimalToBinary2(str(reg_val[x])))
+        print(decimalToBinary2(str(reg_val[x])), end=" ")
+    print(" ")
+mem_dump()
