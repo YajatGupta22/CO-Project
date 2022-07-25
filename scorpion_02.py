@@ -115,7 +115,7 @@ def execute(sen):
             pC=int(binaryToDecimal(sen[8:16]))
             return
     if op=="01010":
-        pC=255
+        pC=256
         return
     pC+=1
 # Executing
@@ -124,7 +124,6 @@ while (pC<256):
     execute(mem_adds[pC])
     print(decimalToBinary(pC-1),end=" ")
     for x in reg_val :
-        if x!="111":
-            print(decimalToBinary2(str(reg_val[x])), end=" ")
+        print(decimalToBinary2(str(reg_val[x])), end=" ")
     print(" ")
 mem_dump()
