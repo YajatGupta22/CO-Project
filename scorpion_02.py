@@ -53,7 +53,8 @@ def mem_dump():
         print(i)
 
 
-def execute(sen,pC):
+def execute(sen):
+    global pC
     op=sen[0:5]
     if op=="10000":         #  Add
         reg_val[sen[7:10]]=reg_val[sen[10:13]]+reg_val[sen[13:16]]
@@ -108,23 +109,27 @@ def execute(sen,pC):
             reg_val["111"]=s
     if op=="11111":         #   Unconditional Jump
         pC=int(binaryToDecimal(sen[8:16]))
+        return
     if op=="01100":         #   Jump If  less than
         if reg_val("111")[-3]==1:
             pC=int(binaryToDecimal(sen[8:16]))
+            return
     if op=="01101":         #   Jump If greater than
         if reg_val("111")[-2]==1:
             pC=int(binaryToDecimal(sen[8:16]))
+            return
     if op=="01111":         #   Jump If  equal to
         if reg_val("111")[-1]==1:
             pC=int(binaryToDecimal(sen[8:16]))
+            return
     if op=="01010":
         pC=255
-
+        return
+    pC+=1
 # Executing
 
-while (pC<len(inputs)):
+while (pC<256):
     execute(mem_adds[pC],pC)
-    pC+=1
     print(decimalToBinary(pC-1),end=" ")
     for x in reg_val:
         print(decimalToBinary2(str(reg_val[x])), end=" ")
