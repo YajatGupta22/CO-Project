@@ -95,15 +95,15 @@ def execute(sen):
     if op=="11100":         #   Bitwise And
         reg_val[sen[7:10]]=reg_val[sen[10:12]]&reg_val[sen[13:16]]
     if op=="11110":         #   Compare And Flag
-        if reg_val["111"]==reg_val[sen[13:16]]:
+        if reg_val[sen[10:13]]==reg_val[sen[13:16]]:
             s=list(reg_val["111"])
             s[-1]=1
             reg_val["111"]=s
-        elif reg_val["111"]>reg_val[sen[13:16]]:
+        elif reg_val[sen[10:13]]>reg_val[sen[13:16]]:
             s=list(reg_val["111"])
             s[-2]=1
             reg_val["111"]=s
-        elif reg_val["111"]<reg_val[sen[13:16]]:
+        elif reg_val[sen[10:13]]<reg_val[sen[13:16]]:
             s=list(reg_val["111"])
             s[-3]=1
             reg_val["111"]=s
