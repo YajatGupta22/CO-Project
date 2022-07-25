@@ -129,9 +129,10 @@ def execute(sen):
 # Executing
 
 while (pC<256):
-    execute(mem_adds[pC],pC)
+    execute(mem_adds[pC])
     print(decimalToBinary(pC-1),end=" ")
-    for x in reg_val:
-        print(decimalToBinary2(str(reg_val[x])), end=" ")
+    for x in reg_val :
+        if x!="111":
+            print(decimalToBinary2(str(reg_val[x])), end=" ")
     print(" ")
 mem_dump()
