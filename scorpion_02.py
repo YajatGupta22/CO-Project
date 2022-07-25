@@ -42,7 +42,7 @@ inputs=[]
 
 
 for i in stdin:
-    inputs.append(i)
+    inputs.append(i.strip())
 
 for i in range(len(inputs)):
     mem_adds[i]=inputs[i]
