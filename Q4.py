@@ -176,5 +176,5 @@ flag_reset()
 #     else:
 #         # print("0000000000000000")
 
-plt.scatter( range((len(mem_acc))),mem_acc) 
+plt.scatter( range(1,(len(mem_acc))+1),mem_acc) 
 plt.show() 
