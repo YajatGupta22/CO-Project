@@ -201,13 +201,10 @@ def convert(sen,line_counter):
         
             
         assert len(out)<7 ,f"Invalid number on line {line_counter}."
-        yajat = yajat + "00010"
-        yajat = yajat + (reg[sen_list[1]])
-        yajat = yajat + (bit_exp)
-        yajat += (bit_mantissa)
+        sen_list_assem.append(reg[sen_list[1]])
+        sen_list_assem.append(bit_exp)
+        sen_list_assem.append(bit_mantissa)
 
-        print(yajat)
-        yajat = ""
  
 
     elif sen_list[0]=="addf":
