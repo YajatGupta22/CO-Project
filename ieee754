@@ -1,0 +1,32 @@
+def float_bin(my_number):
+    integer, fraction = str(my_number).split(".")
+    integer = int(integer)
+    out = str(bin(integer)).replace('0b', '')+"."
+    while True:
+        fraction = str('0.') + str(fraction)
+        if float(fraction)==0:
+            break
+        temp = '%1.20f' % (float(fraction) * 2)
+        integer, fraction = temp.split(".")
+        out += integer
+    return out
+
+def bit_3(n):
+    return '{0:03b}'.format(n)
+
+def bit_5(x):
+    while len(x)!=5:
+        x=x+"0"
+    return x
+
+n = input("Enter floating point value : \n")
+
+str_bin=float_bin(n)
+l=str_bin.split(".")
+i=len(l[0])-1
+bit_exp=bit_3(i)
+x=l[0][1:]+l[-1][:5]
+bit_mantissa=bit_5(x[:5])
+
+print(bit_exp,bit_mantissa)
+print(float_bin(n))
