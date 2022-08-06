@@ -40,7 +40,7 @@ def check_var(inp_lists):
         else:
             return True
 def check_hlt(inp_lists1):
-    assert (inp_lists1[-1]!="hlt"),"hlt not in the last line"
+    assert (inp_lists1[-1]!="hlt\n"),"hlt not in the last line"
     for i in  range(len(inp_lists1)-1):
         if inp_lists1[i]==inp_lists1[-1]:
             assert False,f"hlt declared before the last line at line {i+1}"
