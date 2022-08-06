@@ -46,7 +46,7 @@ def check_hlt(inp_lists1):
             assert False,f"hlt declared before the last line at line {i+1}"
               
 # Dictionary of operands , registers, and variables
-dict0 = {"add": "10000", "sub": "10001", "ld": "10100", "st": "10101", "mul": "10110",
+dict0 = {"add": "10000", "movf":"00010" , "addf":"00000" , "subf":"00001", "sub": "10001", "ld": "10100", "st": "10101", "mul": "10110",
          "div": "10111", "rs": "11000", "ls": "11001", "xor": "11010", "or": "11011", "and": "11100", "not": "11101",
          "cmp": "11110", "jmp": "11111", "jlt": "01100", "jgt": "01101", "je": "01111", "hlt": "01010",
          "mov":"erprev"
@@ -64,7 +64,7 @@ line_counter=1
 
 
 # Dividing the operations into 5 basic categeries on basis of different things
-op1 = ["add", "sub", "mul", "xor", "or", "and"]
+op1 = ["add", "addf" , "subf" ,"sub", "mul", "xor", "or", "and"]
 op2 = ["div", "not", "cmp"]
 op3 = ["jmp", "jlt", "jgt", "je"]
 op4 = ["rs", "ls"]
