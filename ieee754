@@ -19,14 +19,35 @@ def bit_5(x):
         x=x+"0"
     return x
 
+def binaryToDecimal(x):
+    return int(x, 2)
+
+def fraction(x):
+    num=0
+    for i in range(len(x)):
+        num+=int(x[i])*(1/(2**(i+1)))
+    return num
+
 n = input("Enter floating point value : \n")
 
-str_bin=float_bin(n)
+str_bin=float_bin(n)                #calculating ieee
 l=str_bin.split(".")
 i=len(l[0])-1
 bit_exp=bit_3(i)
 x=l[0][1:]+l[-1][:5]
 bit_mantissa=bit_5(x[:5])
 
+exp=binaryToDecimal(bit_exp)    #ieee to bin
+whole="1"+bit_mantissa[:exp]
+frac=bit_mantissa[exp:]
+
+dec_whole=binaryToDecimal(whole)    #bin to dec
+dec_frac=fraction(frac)
+dec=dec_whole+dec_frac
+
+if len(float_bin(n))>6:
+    print("error can be convertered to ieee format")
 print(bit_exp,bit_mantissa)
 print(float_bin(n))
+print(dec_whole,dec_whole)
+print(dec)
