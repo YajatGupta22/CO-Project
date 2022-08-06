@@ -164,4 +164,8 @@ for i in range(0, 256):
     if (i < len(inputs)):
         print(inputs[i])
     else:
-        print("0000000000000000")
+        key=bit_8(i)
+        if(key in memory.keys()):
+            print(bit_16(memory[key]))
+        else:
+            print("0000000000000000")
