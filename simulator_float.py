@@ -75,8 +75,10 @@ def dump():
             bit_mantissa=bit_5(x[:5])
 
             print(bit_exp + bit_mantissa)
+            
 
-        print(bit_16(reg_val[reg]), end=" ")
+        else:
+            print(bit_16(reg_val[reg]), end=" ")
 
 
 def flag_reset():
