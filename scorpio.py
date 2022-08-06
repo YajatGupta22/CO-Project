@@ -145,6 +145,24 @@ def convert(sen,line_counter):
             sen_list_assem.append("111")
             sen_list_assem.append(reg[sen_list[2]])
             
+    elif sen_list[0]=="movf":
+        assert sen_list[2]==0,"Invalid number"
+        sen_list_assem.append("00010")
+        sen_list_assem.append(reg[sen_list[1]])
+        sen_list_assem.append("yaha iee form")
+
+    elif sen_list[0]=="addf":
+        assert sen_list[2]==0,"Invalid number"
+        sen_list_assem.append("0000000")
+        sen_list_assem.append(reg[sen_list[1]])
+        sen_list_assem.append(reg[sen_list[2]])
+        sen_list_assem.append(reg[sen_list[3]])
+     elif sen_list[0]=="subf":
+        assert sen_list[2]==0,"Invalid number"
+        sen_list_assem.append("0000100")
+        sen_list_assem.append(reg[sen_list[1]])
+        sen_list_assem.append(reg[sen_list[2]])
+        sen_list_assem.append(reg[sen_list[3]])
 
     outputs.append("".join(sen_list_assem))
 
