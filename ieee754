@@ -49,5 +49,5 @@ if len(float_bin(n))>6:
     print("error can be convertered to ieee format")
 print(bit_exp,bit_mantissa)
 print(float_bin(n))
-print(dec_whole,dec_whole)
+print(dec_whole,dec_frac)
 print(dec)
