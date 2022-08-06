@@ -82,7 +82,7 @@ dict0 = {"add": "10000", "movf":"00010" , "addf":"00000" , "subf":"00001", "sub"
          "cmp": "11110", "jmp": "11111", "jlt": "01100", "jgt": "01101", "je": "01111", "hlt": "01010",
          "mov":"erprev"
          }
-reg = {"R0": "000", "R1": "001", "R2": "010", "R3": "011", "R4": "100", "R5": "101", "R6": "110"}
+reg = {"R0": "000", "R1": "001", "R2": "010", "R3": "011", "R4": "100", "R5": "101", "R6": "110" , "r0": "000", "r1": "001", "r2": "010", "r3": "011", "r4": "100", "r5": "101", "r6": "110"}
 labels={}
 # Initialising some objects
 list_inputs=[]
@@ -175,12 +175,13 @@ def convert(sen,line_counter):
             assert ((sen_list[1] in reg) or (sen_list[1]=="FLAGS")), f"Syntax Error! at line {line_counter} register not present in ISO"
             sen_list_assem.append("111")
             sen_list_assem.append(reg[sen_list[2]])
+
+    
             
     elif sen_list[0]=="movf":
-
-        
+        yajat = ""
         integer, fraction = str(sen_list[2]).split(".")
-        integer = int(integer)
+        integer = int(integer[1:])
         out = str(bin(integer)).replace('0b', '')+"."
         while True:
             fraction = str('0.') + str(fraction)
@@ -188,9 +189,9 @@ def convert(sen,line_counter):
                 break
             temp = '%1.20f' % (float(fraction) * 2)
             integer, fraction = temp.split(".")
-            out += integer
+            out += integer    
 
-        str_bin=float_bin(out)                #calculating ieee
+        str_bin=float_bin(sen_list[2][1:])                #calculating ieee
         l=str_bin.split(".")
         i=len(l[0])-1
         bit_exp=bit_3(i)
@@ -200,25 +201,35 @@ def convert(sen,line_counter):
         
             
         assert len(out)<7 ,f"Invalid number on line {line_counter}."
-        sen_list_assem.append("00010")
-        sen_list_assem.append(reg[sen_list[1]])
-        sen_list_assem.append(bit_exp)
-        sen_list_assem.append(bit_mantissa)
+        yajat = yajat + "00010"
+        yajat = yajat + (reg[sen_list[1]])
+        yajat = yajat + (bit_exp)
+        yajat += (bit_mantissa)
 
+        print(yajat)
+        yajat = ""
+ 
 
     elif sen_list[0]=="addf":
+
+        yajat =""
         
-        sen_list_assem.append("0000000")
-        sen_list_assem.append(reg[sen_list[1]])
-        sen_list_assem.append(reg[sen_list[2]])
-        sen_list_assem.append(reg[sen_list[3]])
+        yajat += ("00000")
+        yajat+=(reg[sen_list[1]])
+        yajat+=(reg[sen_list[2]])
+        yajat+=(reg[sen_list[3]])
+
+        print(yajat)
 
     elif sen_list[0]=="subf":
         
-        sen_list_assem.append("0000100")
-        sen_list_assem.append(reg[sen_list[1]])
-        sen_list_assem.append(reg[sen_list[2]])
-        sen_list_assem.append(reg[sen_list[3]])
+        yajat =""
+        
+        yajat += ("00001")
+        yajat+=(reg[sen_list[1]])
+        yajat+=(reg[sen_list[2]])
+        yajat+=(reg[sen_list[3]])
+        print(yajat)
 
     outputs.append("".join(sen_list_assem))
 
