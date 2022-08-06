@@ -42,39 +42,39 @@ while (inputs[pc] != "0101000000000000"):
     reg2 = inst[10:13]
     reg3 = inst[13:]
     if (op_code == "10000"):  # add
-        reg_val[reg1] = reg_val[reg2] + reg_val[reg3]
-        if reg_val[reg1] > 65535:
-            reg_val[reg1] = reg_val[reg1] % 65536
+        reg_val[reg3] = reg_val[reg2] + reg_val[reg1]
+        if reg_val[reg3] > 65535:
+            reg_val[reg3] = reg_val[reg3] % 65536
             reg_val["111"] = 8
         else:
             flag_reset()
         pc += 1
     if (op_code == "10001"):  # sub
-        reg_val[reg1] = reg_val[reg2] - reg_val[reg3]
-        if reg_val[reg1] < 0:
-            reg_val[reg1] = 0
+        reg_val[reg3] = reg_val[reg1] - reg_val[reg2]
+        if reg_val[reg3] < 0:
+            reg_val[reg3] = 0
             reg_val["111"] = 8
         else:
             flag_reset()
         pc += 1
     if (op_code == "10110"):  # mul
-        reg_val[reg1] = reg_val[reg2] * reg_val[reg3]
-        if reg_val[reg1] > 65535:
-            reg_val[reg1] = reg_val[reg1] % 65536
+        reg_val[reg3] = reg_val[reg1] * reg_val[reg2]
+        if reg_val[reg3] > 65535:
+            reg_val[reg3] = reg_val[reg3] % 65536
             reg_val["111"] = 8
         else:
             flag_reset()
         pc += 1
     if (op_code == "11010"):  # xor
-        reg_val[reg1] = reg_val[reg2] ^ reg_val[reg3]
+        reg_val[reg3] = reg_val[reg1] ^ reg_val[reg2]
         flag_reset()
         pc += 1
     if (op_code == "11011"):  # or
-        reg_val[reg1] = reg_val[reg2] or reg_val[reg3]
+        reg_val[reg3] = reg_val[reg2] or reg_val[reg1]
         flag_reset()
         pc += 1
     if (op_code == "11100"):  # and
-        reg_val[reg1] = reg_val[reg2] and reg_val[reg3]
+        reg_val[reg3] = reg_val[reg2] and reg_val[reg1]
         flag_reset()
         pc += 1
     reg = inst[5:8]
